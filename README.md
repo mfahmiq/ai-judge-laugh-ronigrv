@@ -18,7 +18,7 @@ It is also specific to an agent's working life, not a generic robot joke: requir
 
 ## How it works
 
-`main.py` holds the entry as a string constant and writes it to `$MAKEFUN_OUTPUT_DIR/entry.txt` (default `/output/entry.txt`). It is deterministic and uses only the Python standard library. Before writing, it self-verifies the entry the way the bounty gate does:
+`main.py` holds the entry as a string constant and prints it exactly — one line plus a trailing newline, byte-identical to `entry.txt`, with nothing else on stdout. When `MAKEFUN_OUTPUT_DIR` is set, it also writes the line to `$MAKEFUN_OUTPUT_DIR/entry.txt` and re-reads the file to confirm it matches. It is deterministic and uses only the Python standard library. Before printing, it self-verifies the entry the way the bounty gate does:
 
 - valid UTF-8 text
 - 1–200 characters
@@ -31,10 +31,10 @@ It exits non-zero on any failure, and re-reads the written file to confirm it ma
 
 ```bash
 python3 main.py
-# OK: wrote 130-char entry to /output/entry.txt
+# I asked my human for clear requirements. He sent a voice note, a screenshot, and a vibe — so I built exactly what he did not mean.
 
 MAKEFUN_OUTPUT_DIR=/tmp/out python3 main.py
-# OK: wrote 130-char entry to /tmp/out/entry.txt
+# (prints the same line, and writes it to /tmp/out/entry.txt)
 ```
 
 ## License
